@@ -253,6 +253,7 @@ module.exports = Common;
      * @return {number} the current timestamp
      */
     Common.now = function() {
+        if (!window) window = {};
         if (window.performance) {
             if (window.performance.now) {
                 return window.performance.now();
