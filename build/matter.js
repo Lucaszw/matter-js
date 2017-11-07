@@ -4388,6 +4388,7 @@ module.exports = Common;
      * @return {boolean} True if the object is a HTMLElement, otherwise false
      */
     Common.isElement = function(obj) {
+        if (this.window !== this) return false;
         return obj instanceof HTMLElement;
     };
 
@@ -4464,15 +4465,15 @@ module.exports = Common;
      * @return {number} the current timestamp
      */
     Common.now = function() {
-        if (!window) window = {};
-        if (window.performance) {
-            if (window.performance.now) {
-                return window.performance.now();
-            } else if (window.performance.webkitNow) {
-                return window.performance.webkitNow();
-            }
+        if (this.window === this) {
+          if (window.performance) {
+              if (window.performance.now) {
+                  return window.performance.now();
+              } else if (window.performance.webkitNow) {
+                  return window.performance.webkitNow();
+              }
+          }
         }
-
         return (new Date()) - Common._nowStartTime;
     };
 
